@@ -3,6 +3,8 @@ const DAOCliente = require('../database/DAO/DAOCliente')
 module.exports = {
     async index(req, res) {
         const client = await DAOCliente.getAll()
+        res.header('Access-Control-Expose-Headers', 'X-Total-Count')
+        res.header('X-Total-Count', client.length)
         res.json(client)
     },
 

@@ -3,6 +3,8 @@ const DAOTabelaDePrecosCompra = require('../database/DAO/DAOTabelaDePrecosCompra
 module.exports = {
     async index(req, res) {
         const tabela = await DAOTabelaDePrecosCompra.getAll()
+        res.header('Access-Control-Expose-Headers', 'X-Total-Count')
+        res.header('X-Total-Count', tabela.length)
         res.json(tabela)
     },
 

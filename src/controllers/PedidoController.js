@@ -3,6 +3,8 @@ const DAOPedido = require('../database/DAO/DAOPedido')
 module.exports = {
     async index(req, res) {
         const client = await DAOPedido.getAll()
+        res.header('Access-Control-Expose-Headers', 'X-Total-Count')
+        res.header('X-Total-Count', client.length)
         res.json(client)
     },
 
