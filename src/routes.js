@@ -7,11 +7,11 @@ const TabelaDePrecosCompraController = require('./controllers/TabelaDePrecosComp
 const PedidoController = require('./controllers/PedidoController')
 
 // Usuarios
-routes.get('/user', ClienteController.index)
-routes.get('/user/:id', ClienteController.get)
-routes.post('/user', ClienteController.cadastro)
-routes.put('/user/:id', ClienteController.update)
-routes.delete('/user/:id', ClienteController.delete)
+routes.get('/clientes', ClienteController.index)
+routes.get('/clientes/:id', ClienteController.get)
+routes.post('/clientes', ClienteController.cadastro)
+routes.put('/clientes/:id', ClienteController.update)
+routes.delete('/clientes/:id', ClienteController.delete)
 
 // Tabela de precos
 routes.get('/tabeladeprecos', TabelaDePrecosController.index)
@@ -21,18 +21,18 @@ routes.put('/tabeladeprecos/:id', TabelaDePrecosController.update)
 routes.delete('/tabeladeprecos/:id', TabelaDePrecosController.delete)
 
 // Tabela de precos de compra
-routes.get('/tabeladecompra', TabelaDePrecosCompraController.index)
-routes.get('/tabeladecompra/:id', TabelaDePrecosCompraController.get)
-routes.post('/tabeladecompra', TabelaDePrecosCompraController.cadastro)
-routes.put('/tabeladecompra/:id', TabelaDePrecosCompraController.update)
-routes.delete('/tabeladecompra/:id', TabelaDePrecosCompraController.delete)
+routes.get('/tabeladecompras', TabelaDePrecosCompraController.index)
+routes.get('/tabeladecompras/:id', TabelaDePrecosCompraController.get)
+routes.post('/tabeladecompras', TabelaDePrecosCompraController.cadastro)
+routes.put('/tabeladecompras/:id', TabelaDePrecosCompraController.update)
+routes.delete('/tabeladecompras/:id', TabelaDePrecosCompraController.delete)
 
 // Pedidos
-routes.get('/pedido', PedidoController.index)
-routes.get('/pedido/:id', PedidoController.get)
-routes.post('/pedido', PedidoController.cadastro)
-routes.put('/pedido/:id', PedidoController.update)
-routes.delete('/pedido/:id', PedidoController.delete)
+routes.get('/pedidos', PedidoController.index)
+routes.get('/pedidos/:id', PedidoController.get)
+routes.post('/pedidos', PedidoController.cadastro)
+routes.put('/pedidos/:id', PedidoController.update)
+routes.delete('/pedidos/:id', PedidoController.delete)
 
 
 

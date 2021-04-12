@@ -7,8 +7,8 @@ exports.up = function (knex, Promise) {
         table.string('endereco');
         table.integer('dias_para_pagar');
         
-        table.timestamp('createdAt').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
-        table.timestamp('updatedAt').defaultTo(knex.raw('NULL ON UPDATE CURRENT_TIMESTAMP'))
+        table.datetime('createdAt').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
+        table.datetime('updatedAt').defaultTo(knex.raw('NULL ON UPDATE CURRENT_TIMESTAMP'))
         table.datetime('deletedAt');
     })
 };

@@ -7,8 +7,8 @@ exports.up = function (knex, Promise) {
         table.timestamp('dataInicio').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
         table.timestamp('dataFim').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
         
-        table.timestamp('createdAt').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
-        table.timestamp('updatedAt').defaultTo(knex.raw('NULL ON UPDATE CURRENT_TIMESTAMP'))
+        table.datetime('createdAt').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
+        table.datetime('updatedAt').defaultTo(knex.raw('NULL ON UPDATE CURRENT_TIMESTAMP'))
         table.datetime('deletedAt');
     })
 };
