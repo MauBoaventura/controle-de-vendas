@@ -23,8 +23,6 @@ module.exports = {
         } catch (err) {
             throw { error: err }
         }
-        console.log(id)
-        console.log(client)
         return client;
     },
 
@@ -49,7 +47,8 @@ module.exports = {
         } catch (err) {
             throw { error: err }
         }
-        return client;
+
+        return await this.getOneById(id)
     },
 
     async insert(dados) {

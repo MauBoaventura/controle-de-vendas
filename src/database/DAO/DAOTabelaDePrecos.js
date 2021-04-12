@@ -23,8 +23,6 @@ module.exports = {
         } catch (err) {
             throw { error: err }
         }
-        console.log(id)
-        console.log(tabela)
         return tabela;
     },
 
@@ -49,7 +47,7 @@ module.exports = {
         } catch (err) {
             throw { error: err }
         }
-        return tabela;
+        return await this.getOneById(id)
     },
 
     async insert(dados) {

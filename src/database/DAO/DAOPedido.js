@@ -47,11 +47,10 @@ module.exports = {
         } catch (err) {
             throw { error: err }
         }
-        return client;
+        return await this.getOneById(id)
     },
 
     async insert(dados) {
-        // console.log(dados)
         try {
           await connection('pedidos').insert(dados)
         } catch (err) {
