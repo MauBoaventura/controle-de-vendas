@@ -21,23 +21,10 @@ module.exports = {
         } catch (error) {
             console.log(error)
         }
-
+        
         client.createdAt = moment(client.createdAt).format("YYYY-MM-DD")
-        // let resp= {data:client}
-        let resp = {
-            id: 1,
-            name: 'Mauricio Boaventura',
-            email: 'mboaraujo@gmail.com',
-            telefone: '86995441013',
-            endereco: null,
-            dias_para_pagar: 1,
-            createdAt: '2021-04-02',
-            updatedAt: null,
-            deletedAt: null
 
-        }
-        // console.log(resp)
-        res.json(resp)
+        res.json(client)
     },
 
     async cadastro(req, res) {

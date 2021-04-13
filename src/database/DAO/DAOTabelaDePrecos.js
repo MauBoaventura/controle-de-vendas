@@ -26,7 +26,7 @@ module.exports = {
         return tabela;
     },
 
-    async deleteOneByid(id) {
+    async deleteOneById(id) {
         try {
             let data = moment().format();
             var tabela = await connection('tabela_de_precos')

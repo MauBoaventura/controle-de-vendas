@@ -26,7 +26,7 @@ module.exports = {
         return client;
     },
 
-    async deleteOneByid(id) {
+    async deleteOneById(id) {
         try {
             let data = moment().format();
             var client = await connection('pedidos')

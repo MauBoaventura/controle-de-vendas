@@ -4,6 +4,9 @@ exports.up = function (knex, Promise) {
         table.string('name');
         table.float('valorCompra').notNullable().defaultTo(0);
         
+        table.timestamp('dataInicio').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
+        table.timestamp('dataFim').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
+
         table.enu('situacao',['PAGO','ABRT','VENC']);
                 
         table.datetime('createdAt').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
