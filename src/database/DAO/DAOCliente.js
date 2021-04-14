@@ -28,7 +28,7 @@ module.exports = {
 
     async deleteOneById(id) {
         try {
-            let data = moment().format();
+            var resp = await this.getOneById(id)
             var client = await connection('clientes')
                 .update("deletedAt", moment().format("YYYY-MM-DD HH:mm:ss"))
                 .where({ "id": id, "deletedAt": null })
@@ -36,6 +36,7 @@ module.exports = {
         } catch (err) {
             throw { error: err }
         }
+        return resp;
     },
 
     async updateOneById(id, atualiza) {
@@ -53,9 +54,10 @@ module.exports = {
 
     async insert(dados) {
         try {
-           await connection('clientes').insert(dados)
+           var id_resp = await connection('clientes').insert(dados)
         } catch (err) {
             throw { error: err }
         }
+        return await this.getOneById(id_resp)
     }
 }
