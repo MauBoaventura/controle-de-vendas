@@ -2,13 +2,24 @@ const connection = require('../connection')
 const moment = require('moment')
 
 module.exports = {
-    async getAll() {
+    async getAll(filters) {
         try {
-            var client = await connection('clientes')
+            var client;
+            if (filters) {
+                client = await connection('clientes')
+                .select("*")
+                .where({ "deletedAt": null, })
+                .limit(filters._end - filters._start)
+                .offset(filters._start )
+                .orderBy(filters._sort, filters._order)
+            }else{   
+                client = await connection('clientes')
                 .select("*")
                 .where({ "deletedAt": null })
-        } catch (err) {
-            throw { error: err }
+                }
+            } catch (err) {
+                console.log(err)
+                throw { error: err }
         }
         return client;
 
@@ -17,9 +28,9 @@ module.exports = {
     async getOneById(id) {
         try {
             var client = await connection('clientes')
-            .select("*")
-            .where({ "id": id, "deletedAt": null })
-            .first()
+                .select("*")
+                .where({ "id": id, "deletedAt": null })
+                .first()
         } catch (err) {
             throw { error: err }
         }
@@ -54,7 +65,7 @@ module.exports = {
 
     async insert(dados) {
         try {
-           var id_resp = await connection('clientes').insert(dados)
+            var id_resp = await connection('clientes').insert(dados)
         } catch (err) {
             throw { error: err }
         }

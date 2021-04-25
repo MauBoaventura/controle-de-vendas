@@ -2,15 +2,27 @@ const DAOCliente = require('../database/DAO/DAOCliente')
 const moment = require('moment')
 module.exports = {
     async index(req, res) {
-        const client = await DAOCliente.getAll()
-        res.header('Access-Control-Expose-Headers', 'X-Total-Count')
-        res.header('X-Total-Count', client.length)
+        try {
+            var client = [];
+            
+            if (req.query.id != undefined) {
+                client.push(await DAOCliente.getOneById(req.query.id))
+            } else {
+                client = await DAOCliente.getAll(req.query)
+            }
+            client.forEach(element => {
+                element.createdAt = moment(element.createdAt).format("YYYY-MM-DD")
+            });
+            
+            const total = await DAOCliente.getAll()
+            res.header('Access-Control-Expose-Headers', 'X-Total-Count')
+            res.header('X-Total-Count', total.length)
 
-        //Formata a data de saida do banco de dados para o formato YYYY-MM-DD
-        client.forEach(element => {
-            element.createdAt = moment(element.createdAt).format("YYYY-MM-DD")
-        });
-        res.json(client)
+            //Formata a data de saida do banco de dados para o formato YYYY-MM-DD
+            res.json(client)
+        } catch (error) {
+            res.status(404).json(error)
+        }
     },
 
     async get(req, res) {
