@@ -14,6 +14,7 @@ exports.up = function (knex, Promise) {
         table.foreign('tabelaId').references('id').inTable('tabela_de_precos')
         
         table.float('desconto').defaultTo(0);
+        table.float('frete').defaultTo(0);
         table.float('totalDaNota');
         
         table.enu('situacao',['PAGO','ABRT','VENC']);
