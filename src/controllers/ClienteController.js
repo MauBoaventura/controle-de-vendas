@@ -21,7 +21,6 @@ module.exports = {
             //Formata a data de saida do banco de dados para o formato YYYY-MM-DD
             res.json(client)
         } catch (error) {
-            console.log(error)
             res.status(404).json(error)
         }
     },
