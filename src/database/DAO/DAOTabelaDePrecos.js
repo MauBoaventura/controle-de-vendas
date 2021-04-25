@@ -2,7 +2,7 @@ const connection = require('../connection')
 const moment = require('moment')
 
 module.exports = {
-    async getAll() {
+    async getAll(filters) {
         try {
             var tabela = await connection('tabela_de_precos')
                 .select("*")
@@ -40,21 +40,22 @@ module.exports = {
 
     async updateOneById(id, atualiza) {
         try {
-            var tabela = await connection('tabela_de_precos')
+            await connection('tabela_de_precos')
                 .where({ "id": id, "deletedAt": null })
                 .update(atualiza)
 
+            return await this.getOneById(id)
         } catch (err) {
             throw { error: err }
         }
-        return await this.getOneById(id)
     },
 
     async insert(dados) {
         try {
-           await connection('tabela_de_precos').insert(dados)
+          var id_resp = await connection('tabela_de_precos').insert(dados)
         } catch (err) {
             throw { error: err }
         }
+        return await this.getOneById(id_resp)
     }
 }

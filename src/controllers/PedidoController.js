@@ -2,7 +2,7 @@ const DAOPedido = require('../database/DAO/DAOPedido')
 
 module.exports = {
     async index(req, res) {
-        const client = await DAOPedido.getAll()
+        const client = await DAOPedido.getAll(req.query)
         res.header('Access-Control-Expose-Headers', 'X-Total-Count')
         res.header('X-Total-Count', client.length)
         res.json(client)
@@ -16,17 +16,20 @@ module.exports = {
 
     async cadastro(req, res) {
         try {
-            await DAOPedido.insert(req.body)
-        } catch (error) {
-           return res.status(400).send({ error: error })
+            delete(req.body.id)
+            var resp = await DAOPedido.insert(req.body)
+        } catch (err) {
+            console.log(err)
+           return res.status(400).send({ error: err })
         }
-        res.status(200).send()
+        res.status(200).send(resp)
     },
 
     async delete(req, res) {
         const id = req.params.id;
+        let resp = await DAOPedido.getOneById(id);
         await DAOPedido.deleteOneById(id);
-        return res.status(200).send()
+        return res.status(200).send(resp)
     },
 
     async update(req, res) {

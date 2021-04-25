@@ -1,8 +1,9 @@
 const TabelaDePrecos = require('../database/DAO/DAOTabelaDePrecos')
+const moment = require('moment')
 
 module.exports = {
     async index(req, res) {
-        const tabela = await TabelaDePrecos.getAll()
+        const tabela = await TabelaDePrecos.getAll(req.query)
         res.header('Access-Control-Expose-Headers', 'X-Total-Count')
         res.header('X-Total-Count', tabela.length)
         res.json(tabela)
@@ -16,22 +17,35 @@ module.exports = {
 
     async cadastro(req, res) {
         try {
-            await TabelaDePrecos.insert(req.body)
+            delete(req.body.id)
+            req.body.createdAt = moment(req.body.createdAt).format("YYYY-MM-DD HH:mm:ss");
+            var resp = await TabelaDePrecos.insert(req.body)
         } catch (error) {
             res.status(400).send({ error: error })
         }
-        res.status(200).send()
+        res.status(200).send(resp)
     },
 
     async delete(req, res) {
         const id = req.params.id;
+        let resp = await TabelaDePrecos.getOneById(id);
         await TabelaDePrecos.deleteOneById(id);
-        return res.status(200).send()
+        return res.status(200).send(resp)
     },
 
     async update(req, res) {
         const id = req.params.id;
-        await TabelaDePrecos.updateOneById(id, req.body)
-        return res.status(200).send()
+        try {
+            req.body.dataInicio = moment(req.body.dataInicio).format("YYYY-MM-DD HH:mm:ss");
+            req.body.dataFim = moment(req.body.dataFim).format("YYYY-MM-DD HH:mm:ss");
+            
+            req.body.createdAt = moment(req.body.createdAt).format("YYYY-MM-DD HH:mm:ss");
+
+            var tabela = await TabelaDePrecos.updateOneById(id, req.body)
+        } catch (error) {
+            console.log(error)
+            res.status(400).send({error:error})
+        }
+        return res.status(200).json(tabela)
     }
 };
