@@ -5,7 +5,7 @@ module.exports = {
     async getAll(filters) {
         try {
             var client;
-            if (filters) {
+            if (filters && filters.length>1) {
                 client = await connection('clientes')
                 .select("*")
                 .where({ "deletedAt": null, })
@@ -18,7 +18,6 @@ module.exports = {
                 .where({ "deletedAt": null })
                 }
             } catch (err) {
-                console.log(err)
                 throw { error: err }
         }
         return client;

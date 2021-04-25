@@ -5,7 +5,7 @@ module.exports = {
         try {
             var client = [];
             
-            if (req.query.id != undefined) {
+            if (req.query.id != undefined && req.query.id.length == 1) {
                 client.push(await DAOCliente.getOneById(req.query.id))
             } else {
                 client = await DAOCliente.getAll(req.query)
@@ -21,6 +21,7 @@ module.exports = {
             //Formata a data de saida do banco de dados para o formato YYYY-MM-DD
             res.json(client)
         } catch (error) {
+            console.log(error)
             res.status(404).json(error)
         }
     },
