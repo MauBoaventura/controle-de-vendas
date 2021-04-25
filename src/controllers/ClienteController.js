@@ -4,21 +4,22 @@ module.exports = {
     async index(req, res) {
         try {
             var client = [];
-            
-            if (req.query.id != undefined && req.query.id.length == 1) {
-                client.push(await DAOCliente.getOneById(req.query.id))
-            } else {
-                client = await DAOCliente.getAll(req.query)
-            }
-            client.forEach(element => {
-                element.createdAt = moment(element.createdAt).format("YYYY-MM-DD")
-            });
-            
+
             const total = await DAOCliente.getAll()
             res.header('Access-Control-Expose-Headers', 'X-Total-Count')
             res.header('X-Total-Count', total.length)
 
+            if (req.query.id != undefined && !Array.isArray(req.query.id)) {
+                client.push(await DAOCliente.getOneById(req.query.id))
+            } else {
+                client = await DAOCliente.getAll(req.query)
+            }
+
             //Formata a data de saida do banco de dados para o formato YYYY-MM-DD
+            client.forEach(element => {
+                element.createdAt = moment(element.createdAt).format("YYYY-MM-DD")
+            });
+
             res.json(client)
         } catch (error) {
             res.status(404).json(error)
@@ -32,6 +33,7 @@ module.exports = {
             client = await DAOCliente.getOneById(id);
         } catch (error) {
             console.log(error)
+            res.status(404).json(error)
         }
 
         client.createdAt = moment(client.createdAt).format("YYYY-MM-DD")
@@ -57,6 +59,7 @@ module.exports = {
             await DAOCliente.deleteOneById(id);
         } catch (error) {
             console.log(error)
+            res.status(404).json(error)
         }
         return res.status(200).send(resp)
     },
@@ -68,6 +71,7 @@ module.exports = {
             var client = await DAOCliente.updateOneById(id, req.body)
         } catch (error) {
             console.log(error)
+            res.status(404).json(error)
         }
         return res.status(200).json(client)
     }

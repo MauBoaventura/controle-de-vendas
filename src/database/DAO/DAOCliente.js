@@ -5,22 +5,24 @@ module.exports = {
     async getAll(filters) {
         try {
             var client;
-            if (filters && filters.length>1) {
+            if (filters !== undefined && filters.id == undefined) {
                 client = await connection('clientes')
-                .select("*")
-                .where({ "deletedAt": null, })
-                .limit(filters._end - filters._start)
-                .offset(filters._start )
-                .orderBy(filters._sort, filters._order)
-            }else{   
-                client = await connection('clientes')
+                    .select("*")
+                    .where({ "deletedAt": null, })
+                    .limit(filters._end - filters._start)
+                    .offset(filters._start)
+                    .orderBy(filters._sort, filters._order)
+                return client;
+            }
+            client = await connection('clientes')
                 .select("*")
                 .where({ "deletedAt": null })
-                }
-            } catch (err) {
-                throw { error: err }
+            return client;
+
+        } catch (err) {
+            console.log(err)
+            throw { error: err }
         }
-        return client;
 
     },
 
