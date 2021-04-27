@@ -4,32 +4,43 @@ const moment = require('moment')
 module.exports = {
     async getAll(filters) {
         try {
-            var client = await connection('pedidos')
+            var pedido;
+            if (filters !== undefined && filters.id == undefined) {
+                pedido = await connection('pedidos')
+                    .select("*")
+                    .where({ "deletedAt": null, })
+                    .limit(filters._end - filters._start)
+                    .offset(filters._start)
+                    .orderBy(filters._sort, filters._order)
+                return pedido;
+            }
+            pedido = await connection('pedidos')
                 .select("*")
                 .where({ "deletedAt": null })
+            return pedido;
+
         } catch (err) {
             throw { error: err }
         }
-        return client;
 
     },
 
     async getOneById(id) {
         try {
-            var client = await connection('pedidos')
+            var pedido = await connection('pedidos')
             .select("*")
             .where({ "id": id, "deletedAt": null })
             .first()
         } catch (err) {
             throw { error: err }
         }
-        return client;
+        return pedido;
     },
 
     async deleteOneById(id) {
         try {
             let data = moment().format();
-            var client = await connection('pedidos')
+            var pedido = await connection('pedidos')
                 .update("deletedAt", moment().format("YYYY-MM-DD HH:mm:ss"))
                 .where({ "id": id, "deletedAt": null })
 
@@ -40,7 +51,7 @@ module.exports = {
 
     async updateOneById(id, atualiza) {
         try {
-            var client = await connection('pedidos')
+            var pedido = await connection('pedidos')
                 .where({ "id": id, "deletedAt": null })
                 .update(atualiza)
 
