@@ -19,6 +19,8 @@ module.exports = {
             //Formata a data de saida do banco de dados para o formato YYYY-MM-DD
             pedido.forEach(element => {
                 element.createdAt = moment(element.createdAt).format("YYYY-MM-DD")
+                element.dataPedido = moment(element.dataPedido).format("YYYY-MM-DD")
+                element.dataVencimentoPedido = moment(element.dataVencimentoPedido).format("YYYY-MM-DD")
             });
             
             res.json(pedido)
@@ -37,6 +39,8 @@ module.exports = {
             res.status(404).json(error)
         }
         pedido.createdAt = moment(pedido.createdAt).format("YYYY-MM-DD")
+        pedido.dataPedido = moment(pedido.dataPedido).format("YYYY-MM-DD")
+        pedido.dataVencimentoPedido = moment(pedido.dataVencimentoPedido).format("YYYY-MM-DD")
         res.json(pedido)
     },
 
@@ -68,6 +72,9 @@ module.exports = {
             if (req.body.dataPedido)
                 req.body.dataPedido = moment(req.body.dataPedido).format("YYYY-MM-DD HH:mm:ss");
             var pedido = await DAOPedido.updateOneById(id, req.body)
+            pedido.createdAt = moment(pedido.createdAt).format("YYYY-MM-DD")
+            pedido.dataPedido = moment(pedido.dataPedido).format("YYYY-MM-DD")
+            pedido.dataVencimentoPedido = moment(pedido.dataVencimentoPedido).format("YYYY-MM-DD")
         } catch (error) {       
             console.log(error)
             return res.status(404).send(error)

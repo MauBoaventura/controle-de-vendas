@@ -54,11 +54,11 @@ module.exports = {
             var pedido = await connection('pedidos')
                 .where({ "id": id, "deletedAt": null })
                 .update(atualiza)
-
+                
+            return await this.getOneById(id)
         } catch (err) {
             throw { error: err }
         }
-        return await this.getOneById(id)
     },
 
     async insert(dados) {
