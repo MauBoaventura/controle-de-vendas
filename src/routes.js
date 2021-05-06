@@ -5,6 +5,7 @@ const ClienteController = require('./controllers/ClienteController')
 const TabelaDePrecosController = require('./controllers/TabelaDePrecosController')
 const TabelaDePrecosCompraController = require('./controllers/TabelaDePrecosCompraController')
 const PedidoController = require('./controllers/PedidoController')
+const RelatorioController = require('./controllers/RelatorioController')
 
 // Usuarios
 routes.get('/clientes', ClienteController.index)
@@ -33,6 +34,9 @@ routes.get('/pedidos/:id', PedidoController.get)
 routes.post('/pedidos', PedidoController.cadastro)
 routes.put('/pedidos/:id', PedidoController.update)
 routes.delete('/pedidos/:id', PedidoController.delete)
+
+// Pedidos
+routes.get('/relatorioDiario', RelatorioController.pedidosVencendoHoje)
 
 
 

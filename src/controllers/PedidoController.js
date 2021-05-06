@@ -1,5 +1,6 @@
 const DAOPedido = require('../database/DAO/DAOPedido')
-const moment = require('moment')
+const moment = require('moment');
+const { utc } = require('moment');
 
 module.exports = {
     async index(req, res) {
@@ -18,9 +19,9 @@ module.exports = {
 
             //Formata a data de saida do banco de dados para o formato YYYY-MM-DD
             pedido.forEach(element => {
-                element.createdAt = moment(element.createdAt).format("YYYY-MM-DD")
-                element.dataPedido = moment(element.dataPedido).format("YYYY-MM-DD")
-                element.dataVencimentoPedido = moment(element.dataVencimentoPedido).format("YYYY-MM-DD")
+                element.createdAt = utc(element.createdAt).format("YYYY-MM-DD")
+                element.dataPedido = utc(element.dataPedido).format("YYYY-MM-DD")
+                element.dataVencimentoPedido = utc(element.dataVencimentoPedido).format("YYYY-MM-DD")
             });
             
             res.json(pedido)
@@ -38,9 +39,10 @@ module.exports = {
             console.log(error)
             res.status(404).json(error)
         }
-        pedido.createdAt = moment(pedido.createdAt).format("YYYY-MM-DD")
-        pedido.dataPedido = moment(pedido.dataPedido).format("YYYY-MM-DD")
-        pedido.dataVencimentoPedido = moment(pedido.dataVencimentoPedido).format("YYYY-MM-DD")
+        console.log(pedido.createdAt)
+        pedido.createdAt = utc(pedido.createdAt).format("YYYY-MM-DD")
+        pedido.dataPedido = utc(pedido.dataPedido).format("YYYY-MM-DD")
+        pedido.dataVencimentoPedido = utc(pedido.dataVencimentoPedido).format("YYYY-MM-DD")
         res.json(pedido)
     },
 
@@ -72,9 +74,9 @@ module.exports = {
             if (req.body.dataPedido)
                 req.body.dataPedido = moment(req.body.dataPedido).format("YYYY-MM-DD HH:mm:ss");
             var pedido = await DAOPedido.updateOneById(id, req.body)
-            pedido.createdAt = moment(pedido.createdAt).format("YYYY-MM-DD")
-            pedido.dataPedido = moment(pedido.dataPedido).format("YYYY-MM-DD")
-            pedido.dataVencimentoPedido = moment(pedido.dataVencimentoPedido).format("YYYY-MM-DD")
+            pedido.createdAt = utc(pedido.createdAt).format("YYYY-MM-DD")
+            pedido.dataPedido = utc(pedido.dataPedido).format("YYYY-MM-DD")
+            pedido.dataVencimentoPedido = utc(pedido.dataVencimentoPedido).format("YYYY-MM-DD")
         } catch (error) {       
             console.log(error)
             return res.status(404).send(error)
