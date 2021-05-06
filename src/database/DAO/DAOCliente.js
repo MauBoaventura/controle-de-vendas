@@ -5,7 +5,7 @@ module.exports = {
     async getAll(filters) {
         try {
             var client;
-            if (filters !== undefined && filters.id == undefined) {
+            if (filters !== undefined && filters.id == undefined && Object.values(filters).length !== 0) {
                 client = await connection('clientes')
                     .select("*")
                     .where({ "deletedAt": null, })
