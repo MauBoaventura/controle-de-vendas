@@ -24,7 +24,8 @@
     "knex": "^0.95.4",
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "set-tz": "^0.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
