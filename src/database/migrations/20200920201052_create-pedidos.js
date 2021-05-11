@@ -15,7 +15,9 @@ exports.up = function (knex, Promise) {
         
         table.float('desconto').defaultTo(0);
         table.float('frete').defaultTo(0);
-        table.float('totalDaNota');
+        table.float('pagoFornecedor').defaultTo(0);
+        table.float('totalArrecadado').defaultTo(0);
+        table.float('totalDaNota').defaultTo(0);
         
         table.enu('situacao',['PAGO','ABRT','VENC']);
         
@@ -25,7 +27,7 @@ exports.up = function (knex, Promise) {
         table.float('valorLucro').defaultTo(0);
         
         table.datetime('createdAt').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
-        table.datetime('updatedAt').defaultTo(knex.raw('NULL ON UPDATE CURRENT_TIMESTAMP'))
+        // table.datetime('updatedAt').defaultTo(knex.raw('NULL ON UPDATE CURRENT_TIMESTAMP'))
         table.datetime('deletedAt');
     })
 };

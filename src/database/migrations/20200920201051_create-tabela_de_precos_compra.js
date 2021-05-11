@@ -10,7 +10,7 @@ exports.up = function (knex, Promise) {
         table.enu('situacao',['PAGO','ABRT','VENC']);
                 
         table.datetime('createdAt').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
-        table.datetime('updatedAt').defaultTo(knex.raw('NULL ON UPDATE CURRENT_TIMESTAMP'))
+        // table.datetime('updatedAt').defaultTo(knex.raw('NULL ON UPDATE CURRENT_TIMESTAMP'))
         table.datetime('deletedAt');
     })
 };
