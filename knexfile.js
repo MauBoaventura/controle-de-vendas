@@ -18,10 +18,10 @@ module.exports = {
   production: {
     client: 'mysql',
     connection: {
-      database: 'heroku_4458bb5fsfdfgfdd838ce78',
-      host: 'us-cdbr-east-02.cleardb.co12312m',
-      user: '',
-      password: '',
+      database: 'heroku_c50cc0114c4d07f',
+      host: 'us-cdbr-east-03.cleardb.com',
+      user: 'b870b775841c42',
+      password: '5bfd5986',
       timezone: 'utc'
 
     },
