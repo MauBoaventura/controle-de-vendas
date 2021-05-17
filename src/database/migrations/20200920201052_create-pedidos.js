@@ -13,6 +13,7 @@ exports.up = function (knex, Promise) {
         table.integer('tabelaId').notNullable().unsigned();
         table.foreign('tabelaId').references('id').inTable('tabela_de_precos')
         
+        table.float('quilo_desconto').defaultTo(0);
         table.float('desconto').defaultTo(0);
         table.float('frete').defaultTo(0);
         table.float('pagoFornecedor').defaultTo(0);
