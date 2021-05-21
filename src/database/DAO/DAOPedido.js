@@ -73,9 +73,10 @@ module.exports = {
     async pedidosVencendoHoje(filters) {
         try {
             pedidos = await connection('pedidos')
-            .select('name', 'dataPedido', 'dataVencimentoPedido', 'quilo', 'totalDaNota', 'frete')
-            .joinRaw('p inner join clientes c on c.id = clienteId')
-            .whereRaw('extract(day from p.dataVencimentoPedido) = extract(day from CURRENT_DATE()) and extract(month from p.dataVencimentoPedido) = extract(month from CURRENT_DATE()) and extract(year from p.dataVencimentoPedido) = extract(year from CURRENT_DATE()) and p.deletedAt is null');
+                .select('p.name', 'dataPedido', 'dataVencimentoPedido', 'desconto', 'quilo', 'totalDaNota', 'frete', 'valor')
+                .joinRaw('p inner join clientes c on c.id = clienteId')
+                .joinRaw('inner join tabela_de_precos tb on tb.id = tabelaId')
+                .whereRaw('extract(day from p.dataVencimentoPedido) = extract(day from CURRENT_DATE()) and extract(month from p.dataVencimentoPedido) = extract(month from CURRENT_DATE()) and extract(year from p.dataVencimentoPedido) = extract(year from CURRENT_DATE()) and p.deletedAt is null');
             return pedidos;
         } catch (err) {
             console.log(err)
@@ -86,8 +87,8 @@ module.exports = {
     async pedidosDoDia() {
         try {
             pedidos = await connection('pedidos')
-            .select("*")
-            .whereRaw('extract(day from p.dataVencimentoPedido) = extract(day from CURRENT_DATE()) and extract(month from p.dataVencimentoPedido) = extract(month from CURRENT_DATE()) and extract(year from p.dataVencimentoPedido) = extract(year from CURRENT_DATE()) and p.deletedAt is null');
+                .select("*")
+                .whereRaw('extract(day from p.dataVencimentoPedido) = extract(day from CURRENT_DATE()) and extract(month from p.dataVencimentoPedido) = extract(month from CURRENT_DATE()) and extract(year from p.dataVencimentoPedido) = extract(year from CURRENT_DATE()) and p.deletedAt is null');
             return pedidos;
         } catch (err) {
             console.log(err)
@@ -99,9 +100,9 @@ module.exports = {
     async faturamentoEntreDatas(dataInicio, dataFim) {
         try {
             pedidos = await connection('pedidos')
-            .select('name', 'dataPedido', 'dataVencimentoPedido', 'quilo', 'totalDaNota', 'frete')
-            .joinRaw('p inner join clientes c on c.id = clienteId')
-            .whereRaw('extract(day from p.dataVencimentoPedido) = extract(day from CURRENT_DATE()) and extract(month from p.dataVencimentoPedido) = extract(month from CURRENT_DATE()) and extract(year from p.dataVencimentoPedido) = extract(year from CURRENT_DATE())');
+                .select('name', 'dataPedido', 'dataVencimentoPedido', 'quilo', 'totalDaNota', 'frete')
+                .joinRaw('p inner join clientes c on c.id = clienteId')
+                .whereRaw('extract(day from p.dataVencimentoPedido) = extract(day from CURRENT_DATE()) and extract(month from p.dataVencimentoPedido) = extract(month from CURRENT_DATE()) and extract(year from p.dataVencimentoPedido) = extract(year from CURRENT_DATE())');
             return pedidos;
         } catch (err) {
             console.log(err)
@@ -113,9 +114,9 @@ module.exports = {
     async pedidos(filters) {
         try {
             pedidos = await connection('pedidos')
-            .select('name', 'dataPedido', 'dataVencimentoPedido', 'quilo', 'totalDaNota', 'frete')
-            .joinRaw('p inner join clientes c on c.id = clienteId')
-            .whereRaw('extract(day from p.dataVencimentoPedido) = extract(day from CURRENT_DATE()) and extract(month from p.dataVencimentoPedido) = extract(month from CURRENT_DATE()) and extract(year from p.dataVencimentoPedido) = extract(year from CURRENT_DATE())');
+                .select('name', 'dataPedido', 'dataVencimentoPedido', 'quilo', 'totalDaNota', 'frete')
+                .joinRaw('p inner join clientes c on c.id = clienteId')
+                .whereRaw('extract(day from p.dataVencimentoPedido) = extract(day from CURRENT_DATE()) and extract(month from p.dataVencimentoPedido) = extract(month from CURRENT_DATE()) and extract(year from p.dataVencimentoPedido) = extract(year from CURRENT_DATE())');
             return pedidos;
         } catch (err) {
             console.log(err)
@@ -123,5 +124,5 @@ module.exports = {
         }
 
     },
-    
+
 }
