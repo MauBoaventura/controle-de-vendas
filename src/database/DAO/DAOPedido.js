@@ -73,9 +73,9 @@ module.exports = {
     async pedidosVencendoHoje(filters) {
         try {
             pedidos = await connection('pedidos')
-                .select('p.name', 'dataPedido', 'dataVencimentoPedido', 'desconto', 'quilo', 'totalDaNota', 'frete', 'valor')
+                .select("c.name", 'dataPedido', 'dataVencimentoPedido', 'desconto', 'quilo', 'totalDaNota', 'frete', 'valor')
                 .joinRaw('p inner join clientes c on c.id = clienteId')
-                .joinRaw('inner join tabela_de_precos tb on tb.id = tabelaId')
+                .join('tabela_de_precos', 'tabela_de_precos.id','p.tabelaId')
                 .whereRaw('extract(day from p.dataVencimentoPedido) = extract(day from CURRENT_DATE()) and extract(month from p.dataVencimentoPedido) = extract(month from CURRENT_DATE()) and extract(year from p.dataVencimentoPedido) = extract(year from CURRENT_DATE()) and p.deletedAt is null');
             return pedidos;
         } catch (err) {
