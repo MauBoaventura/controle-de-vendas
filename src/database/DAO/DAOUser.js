@@ -16,12 +16,11 @@ module.exports = {
 
     async getOneByCPF(cpf) {
         try {
-            const client = await connection('users')
+            var client = await connection('users')
             .select("*")
             .where({ "cpf": cpf, "deletedAt": null })
             .first()
         } catch (err) {
-            res.status(200).send({err})
             throw { error: err }
         }
         return client;

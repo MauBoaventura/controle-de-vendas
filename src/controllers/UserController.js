@@ -44,7 +44,6 @@ module.exports = {
                     error: "Cpf already used!"
                 })
             }
-
             //Verifica se o email já esta sendo utilizado
             if (await DAOUser.getOneByEmail(email) != undefined) {
                 return res.status(401).json({
