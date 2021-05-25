@@ -6,6 +6,7 @@ const TabelaDePrecosController = require('./controllers/TabelaDePrecosController
 const TabelaDePrecosCompraController = require('./controllers/TabelaDePrecosCompraController')
 const PedidoController = require('./controllers/PedidoController')
 const RelatorioController = require('./controllers/RelatorioController')
+const authentication = require('./util/authentication')
 
 // Usuarios
 routes.get('/clientes', ClienteController.index)
@@ -37,6 +38,19 @@ routes.delete('/pedidos/:id', PedidoController.delete)
 
 // Pedidos
 routes.get('/relatorioDiario', RelatorioController.pedidosVencendoHoje)
+
+const UserController = require('./controllers/UserController')
+const LoginController = require('./controllers/LoginController')
+
+//Login
+routes.post('/login', LoginController.login)
+
+// Usuarios
+routes.get('/user', UserController.index)
+routes.get('/user/:cpf', UserController.get)
+routes.post('/user', UserController.cadastro)
+routes.put('/user/:cpf', authentication.verificacaoJWT, UserController.update)
+routes.delete('/user/:cpf', authentication.verificacaoJWT, UserController.delete)
 
 
 
