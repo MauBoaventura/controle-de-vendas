@@ -21,6 +21,7 @@ module.exports = {
             .where({ "cpf": cpf, "deletedAt": null })
             .first()
         } catch (err) {
+            res.status(200).send({err})
             throw { error: err }
         }
         return client;
