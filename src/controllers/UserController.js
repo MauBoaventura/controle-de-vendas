@@ -33,31 +33,38 @@ module.exports = {
     },
 
     async cadastro(req, res) {
-        const cpf = req.body.cpf;
-        const email = req.body.email;
-
-        //Verifica se o cpf já esta sendo utilizado
-        if (await DAOUser.getOneByCPF(cpf) != undefined) {
-            return res.status(401).json({
-                error: "Cpf already used!"
-            })
-        }
-
-        //Verifica se o email já esta sendo utilizado
-        if (await DAOUser.getOneByEmail(email) != undefined) {
-            return res.status(401).json({
-                error: "Email already used!"
-            })
-        }
-
-        //Insere no banco
         try {
-            req.body.password = await util.criptografar(req.body.password)
-            await DAOUser.insert(req.body)
-        } catch (error) {
-            res.status(400).send({ error: error })
+
+            const cpf = req.body.cpf;
+            const email = req.body.email;
+
+            //Verifica se o cpf já esta sendo utilizado
+            if (await DAOUser.getOneByCPF(cpf) != undefined) {
+                return res.status(401).json({
+                    error: "Cpf already used!"
+                })
+            }
+
+            //Verifica se o email já esta sendo utilizado
+            if (await DAOUser.getOneByEmail(email) != undefined) {
+                return res.status(401).json({
+                    error: "Email already used!"
+                })
+            }
+
+            //Insere no banco
+            try {
+                req.body.password = await util.criptografar(req.body.password)
+                await DAOUser.insert(req.body)
+            } catch (error) {
+                res.status(400).send({ error: error })
+            }
+            res.status(200).send()
+        } catch (err) {
+            return res.status(401).json({
+                error: err
+            })
         }
-        res.status(200).send()
     },
 
     async delete(req, res) {
