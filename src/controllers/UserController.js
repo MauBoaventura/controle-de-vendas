@@ -52,7 +52,7 @@ module.exports = {
                 })
             }
 
-            res.status(200).send({body:req.body})
+            // res.status(200).send({body:req.body})
             //Insere no banco
             try {
                 req.body.password = await util.criptografar(req.body.password)
