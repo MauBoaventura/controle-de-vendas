@@ -54,7 +54,6 @@ module.exports = {
 
             //Insere no banco
             try {
-                res.status(200).send({ error: "CARAI" })
                 req.body.password = await util.criptografar(req.body.password)
                 await DAOUser.insert(req.body)
             } catch (error) {

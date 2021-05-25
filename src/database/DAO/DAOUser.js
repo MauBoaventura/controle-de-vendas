@@ -21,10 +21,8 @@ module.exports = {
             .where({ "cpf": cpf, "deletedAt": null })
             .first()
         } catch (err) {
-            return { error: err }
+            throw { error: err }
         }
-        console.log(cpf)
-        console.log(client)
         return client;
     },
 
@@ -35,7 +33,7 @@ module.exports = {
                 .where({ "email": email, "deletedAt": null })
                 .first()
         } catch (err) {
-            return { error: err }
+            throw { error: err }
         }
         return client;
     },
@@ -68,7 +66,7 @@ module.exports = {
         try {
            await connection('users').insert(dados)
         } catch (err) {
-            return { error: err }
+            throw { error: err }
         }
     },
 }

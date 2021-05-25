@@ -82,7 +82,7 @@ module.exports = {
             const encryptedSecret = cipher.update(senha, "utf8", "base64") + cipher.final("base64");
             return encryptedSecret;
         } catch (error) {
-            return error
+            throw error
         }
     },
 
