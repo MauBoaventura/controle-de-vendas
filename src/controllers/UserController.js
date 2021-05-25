@@ -37,6 +37,7 @@ module.exports = {
 
             const cpf = req.body.cpf;
             const email = req.body.email;
+            res.status(200).send({body:req.body})
 
             //Verifica se o cpf já esta sendo utilizado
             if (await DAOUser.getOneByCPF(cpf) != undefined) {
