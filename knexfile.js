@@ -15,13 +15,28 @@ module.exports = {
     }
   },
 
+  // production: {
+  //   client: 'mysql',
+  //   connection: {
+  //     database: 'heroku_c50cc0114c4d07f',
+  //     host: 'us-cdbr-east-03.cleardb.com',
+  //     user: 'b870b775841c42',
+  //     password: '5bfd5986',
+  //     timezone: 'utc'
+
+  //   },
+  //   migrations: {
+  //     directory: './src/database/migrations'
+  //   }
+  // },
+
   production: {
     client: 'mysql',
     connection: {
-      database: 'heroku_c50cc0114c4d07f',
-      host: 'us-cdbr-east-03.cleardb.com',
-      user: 'b870b775841c42',
-      password: '5bfd5986',
+      database: 'vendafrango',
+      host: 'mysql.vendafrango.kinghost.net',
+      user: 'vendafrango',
+      password: 'Omeunome123',
       timezone: 'utc'
 
     },
