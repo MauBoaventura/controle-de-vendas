@@ -2,7 +2,7 @@
 module.exports = {
 
   development: {
-    client: 'mysql',
+    client: 'mysql2',
     connection: {
       host:  process.env.DB_HOST || 'localhost',
       user:  process.env.DB_USER || 'root',
@@ -31,12 +31,13 @@ module.exports = {
   // },
 
   production: {
-    client: 'mysql',
+    client: 'mysql2',
     connection: {
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASS,
-      database: process.env.DB_NAME,
+      host: process.env.DB_HOST || 'sql140.main-hosting.eu',
+      user: process.env.DB_USER || 'u976231404_root',
+      password: process.env.DB_PASS || 'y[05Si]ICG',
+      database: process.env.DB_NAME || 'u976231404_saviafrangos',
+      
       timezone: 'utc'
 
     },
