@@ -33,10 +33,10 @@ module.exports = {
   production: {
     client: 'mysql',
     connection: {
-      database: 'vendafrango',
-      host: 'mysql.vendafrango.kinghost.net',
-      user: 'vendafrango',
-      password: 'Omeunome123',
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
       timezone: 'utc'
 
     },
