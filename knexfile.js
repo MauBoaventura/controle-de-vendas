@@ -8,7 +8,7 @@ module.exports = {
       user:  process.env.DB_USER || 'root',
       password:  process.env.DB_PASS || 'password',
       database:  process.env.DB_NAME || 'controleDeVendas',
-      timezone: 'utc'
+      // timezone: 'utc'
     },
     migrations: {
       directory: './src/database/migrations'
@@ -33,10 +33,10 @@ module.exports = {
   production: {
     client: 'mysql2',
     connection: {
-      host: process.env.DB_HOST || 'sql140.main-hosting.eu',
-      user: process.env.DB_USER || 'u976231404_root',
-      password: process.env.DB_PASS || 'y[05Si]ICG',
-      database: process.env.DB_NAME || 'u976231404_saviafrangos',
+      host: process.env.DB_HOST ,
+      user: process.env.DB_USER ,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME ,
       
       timezone: 'utc'
 

@@ -87,9 +87,25 @@ module.exports = {
     async pedidosDoDia() {
         try {
             pedidos = await connection('pedidos')
-                .select("*")
-                .whereRaw('extract(day from p.dataVencimentoPedido) = extract(day from CURRENT_DATE()) and extract(month from p.dataVencimentoPedido) = extract(month from CURRENT_DATE()) and extract(year from p.dataVencimentoPedido) = extract(year from CURRENT_DATE()) and p.deletedAt is null');
-            return pedidos;
+                .select("c.name", 'dataPedido', 'dataVencimentoPedido', 'desconto', 'quilo', 'totalDaNota', 'frete', 'valor')
+                .joinRaw('p inner join clientes c on c.id = clienteId')
+                .join('tabela_de_precos', 'tabela_de_precos.id','p.tabelaId')
+                .whereRaw('extract(day from p.dataPedido) = extract(day from CURRENT_DATE()) and extract(month from p.dataPedido) = extract(month from CURRENT_DATE()) and extract(year from p.dataPedido) = extract(year from CURRENT_DATE()) and p.deletedAt is null');
+                return pedidos;
+        } catch (err) {
+            console.log(err)
+            throw { error: err }
+        }
+
+    },
+    async pedidosCadastradosHoje() {
+        try {
+            pedidos = await connection('pedidos')
+                .select("c.name", 'dataPedido', 'dataVencimentoPedido', 'desconto', 'quilo', 'totalDaNota', 'frete', 'valor')
+                .joinRaw('p inner join clientes c on c.id = clienteId')
+                .join('tabela_de_precos', 'tabela_de_precos.id','p.tabelaId')
+                .whereRaw('extract(day from p.createdAt) = extract(day from CURRENT_DATE()) and extract(month from p.createdAt) = extract(month from CURRENT_DATE()) and extract(year from p.createdAt) = extract(year from CURRENT_DATE()) and p.deletedAt is null');
+                return pedidos;
         } catch (err) {
             console.log(err)
             throw { error: err }

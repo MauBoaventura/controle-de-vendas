@@ -1,6 +1,8 @@
 const express = require('express')
 const routes = express.Router()
 
+const UserController = require('./controllers/UserController')
+const LoginController = require('./controllers/LoginController')
 const ClienteController = require('./controllers/ClienteController')
 const TabelaDePrecosController = require('./controllers/TabelaDePrecosController')
 const TabelaDePrecosCompraController = require('./controllers/TabelaDePrecosCompraController')
@@ -37,10 +39,10 @@ routes.put('/pedidos/:id', PedidoController.update)
 routes.delete('/pedidos/:id', PedidoController.delete)
 
 // Pedidos
-routes.get('/relatorioDiario', RelatorioController.pedidosVencendoHoje)
-
-const UserController = require('./controllers/UserController')
-const LoginController = require('./controllers/LoginController')
+routes.get('/relatorios', RelatorioController.index)
+routes.get('/relatorioVencimentoDiario', RelatorioController.pedidosVencendoHoje)
+routes.get('/relatorioPedidosDiario', RelatorioController.pedidosDoDia)
+routes.get('/relatorioPedidosCadastradosHoje', RelatorioController.pedidosCadastradosHoje)
 
 //Login
 routes.post('/login', LoginController.login)
