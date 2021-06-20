@@ -9,8 +9,8 @@ module.exports = {
                 client = await connection('clientes')
                     .select("*")
                     .where({ "deletedAt": null, })
-                    .limit(filters._end - filters._start)
-                    .offset(filters._start)
+                    // .limit(filters._end - filters._start)
+                    // .offset(filters._start)
                     .orderBy(filters._sort, filters._order)
                 return client;
             }
