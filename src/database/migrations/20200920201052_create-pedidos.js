@@ -7,8 +7,8 @@ exports.up = function (knex, Promise) {
         table.timestamp('dataPedido').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
         table.timestamp('dataVencimentoPedido');
         
-        table.integer('quant_caixa');
-        table.float('quilo');
+        table.integer('quant_caixa').defaultTo(0);
+        table.float('quilo').defaultTo(0);
         
         table.integer('tabelaId').notNullable().unsigned();
         table.foreign('tabelaId').references('id').inTable('tabela_de_precos')
@@ -20,7 +20,7 @@ exports.up = function (knex, Promise) {
         table.float('totalArrecadado').defaultTo(0);
         table.float('totalDaNota').defaultTo(0);
         
-        table.enu('situacao',['PAGO','ABRT','VENC']);
+        table.enu('situacao',['PAGO','ABRT','VENC']).defaultTo('ABRT');
         
         table.integer('tabelaCompraId').notNullable().unsigned();
         table.foreign('tabelaCompraId').references('id').inTable('tabela_de_precos_compra')
