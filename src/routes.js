@@ -38,11 +38,15 @@ routes.post('/pedidos', PedidoController.cadastro)
 routes.put('/pedidos/:id', PedidoController.update)
 routes.delete('/pedidos/:id', PedidoController.delete)
 
-// Pedidos
+// Relatorios
 routes.get('/relatorios', RelatorioController.index)
 routes.get('/relatorioVencimentoDiario', RelatorioController.pedidosVencendoHoje)
 routes.get('/relatorioPedidosDiario', RelatorioController.pedidosDoDia)
 routes.get('/relatorioPedidosCadastradosHoje', RelatorioController.pedidosCadastradosHoje)
+routes.get('/relatorioPorIntervaloDataDoPedido', RelatorioController.intervaloDataDoPedido)
+routes.get('/relatorioPorIntervaloDataDoPedidoPorCliente', RelatorioController.intervaloDataDoPedidoPorCliente)
+routes.get('/relatorioCustoComFrete', RelatorioController.custoComFrete)
+routes.get('/relatorioPedidosParaCarregamento', RelatorioController.pedidosParaCarregamento)
 
 //Login
 routes.post('/login', LoginController.login)

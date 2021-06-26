@@ -75,7 +75,7 @@ module.exports = {
             pedidos = await connection('pedidos')
                 .select("c.name", 'dataPedido', 'dataVencimentoPedido', 'desconto', 'quilo', 'totalDaNota', 'frete', 'valor')
                 .joinRaw('p inner join clientes c on c.id = clienteId')
-                .join('tabela_de_precos', 'tabela_de_precos.id','p.tabelaId')
+                .join('tabela_de_precos', 'tabela_de_precos.id', 'p.tabelaId')
                 .whereRaw('extract(day from p.dataVencimentoPedido) = extract(day from CURRENT_DATE()) and extract(month from p.dataVencimentoPedido) = extract(month from CURRENT_DATE()) and extract(year from p.dataVencimentoPedido) = extract(year from CURRENT_DATE()) and p.deletedAt is null');
             return pedidos;
         } catch (err) {
@@ -89,9 +89,9 @@ module.exports = {
             pedidos = await connection('pedidos')
                 .select("c.name", 'dataPedido', 'dataVencimentoPedido', 'desconto', 'quilo', 'totalDaNota', 'frete', 'valor')
                 .joinRaw('p inner join clientes c on c.id = clienteId')
-                .join('tabela_de_precos', 'tabela_de_precos.id','p.tabelaId')
+                .join('tabela_de_precos', 'tabela_de_precos.id', 'p.tabelaId')
                 .whereRaw('extract(day from p.dataPedido) = extract(day from CURRENT_DATE()) and extract(month from p.dataPedido) = extract(month from CURRENT_DATE()) and extract(year from p.dataPedido) = extract(year from CURRENT_DATE()) and p.deletedAt is null');
-                return pedidos;
+            return pedidos;
         } catch (err) {
             console.log(err)
             throw { error: err }
@@ -103,15 +103,70 @@ module.exports = {
             pedidos = await connection('pedidos')
                 .select("c.name", 'dataPedido', 'dataVencimentoPedido', 'desconto', 'quilo', 'totalDaNota', 'frete', 'valor')
                 .joinRaw('p inner join clientes c on c.id = clienteId')
-                .join('tabela_de_precos', 'tabela_de_precos.id','p.tabelaId')
+                .join('tabela_de_precos', 'tabela_de_precos.id', 'p.tabelaId')
                 .whereRaw('extract(day from p.createdAt) = extract(day from CURRENT_DATE()) and extract(month from p.createdAt) = extract(month from CURRENT_DATE()) and extract(year from p.createdAt) = extract(year from CURRENT_DATE()) and p.deletedAt is null');
-                return pedidos;
+            return pedidos;
         } catch (err) {
             console.log(err)
             throw { error: err }
         }
 
     },
+
+    async intervaloDataDoPedido(inicial, final) {
+        try {
+            pedidos = await connection('pedidos')
+                .select('dataPedido', 'c.name', 'valor', 'dataVencimentoPedido', 'quant_frango', 'quilo', 'desconto', 'totalDaNota', 'situacao')
+                .joinRaw('p inner join clientes c on c.id = clienteId')
+                .join('tabela_de_precos', 'tabela_de_precos.id', 'p.tabelaId')
+                .whereRaw('p.dataPedido between \'' + inicial + '\' and \'' + final + '\' and p.deletedAt is null');
+            return pedidos;
+        } catch (err) {
+            console.log(err)
+            throw { error: err }
+        }
+    },
+
+    async intervaloDataDoPedidoPorCliente(inicial, final, clienteId) {
+        try {
+            pedidos = await connection('pedidos')
+                .select('dataPedido', 'c.name', 'dataVencimentoPedido', 'quant_frango', 'valor', 'quilo', 'desconto', 'situacao')
+                .joinRaw('p inner join clientes c on c.id = clienteId')
+                .join('tabela_de_precos', 'tabela_de_precos.id', 'p.tabelaId')
+                .whereRaw('p.dataPedido between \'' + inicial + '\' and \'' + final + '\' and c.id = ' + clienteId + ' and p.deletedAt is null');
+            return pedidos;
+        } catch (err) {
+            console.log(err)
+            throw { error: err }
+        }
+    },
+
+    async custoComFrete(inicial, final) {
+        try {
+            pedidos = await connection('pedidos')
+                .select('dataPedido', 'quilo', 'frete')
+                .joinRaw('p inner join clientes c on c.id = clienteId')
+                .whereRaw('p.dataPedido between \'' + inicial + '\' and \'' + final + '\' and p.deletedAt is null');
+            return pedidos;
+        } catch (err) {
+            console.log(err)
+            throw { error: err }
+        }
+    },
+
+    async pedidosParaCarregamento(inicial, final) {
+        try {
+            pedidos = await connection('pedidos')
+                .select('dataPedido', 'c.name', 'quant_frango', 'quant_caixa')
+                .joinRaw('p inner join clientes c on c.id = clienteId')
+                .whereRaw('p.dataPedido between \'' + inicial + '\' and \'' + final + '\' and p.deletedAt is null');
+            return pedidos;
+        } catch (err) {
+            console.log(err)
+            throw { error: err }
+        }
+    },
+
     //A fazer
     async faturamentoEntreDatas(dataInicio, dataFim) {
         try {
