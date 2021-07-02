@@ -152,7 +152,6 @@ module.exports = {
                 .whereRaw('p.dataPedido between \'' + inicial + '\' and \'' + final + '\' and p.deletedAt is null')
                 .groupBy('dataPedido')
                 .orderBy('dataPedido');
-                console.log(pedidos)
             return pedidos;
         } catch (err) {
             console.log(err)
