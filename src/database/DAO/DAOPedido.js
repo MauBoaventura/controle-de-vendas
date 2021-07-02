@@ -119,7 +119,8 @@ module.exports = {
                 .select('dataPedido', 'c.name', 'valor', 'dataVencimentoPedido', 'quant_frango', 'quilo', 'desconto', 'totalDaNota', 'situacao')
                 .joinRaw('p inner join clientes c on c.id = clienteId')
                 .join('tabela_de_precos', 'tabela_de_precos.id', 'p.tabelaId')
-                .whereRaw('p.dataPedido between \'' + inicial + '\' and \'' + final + '\' and p.deletedAt is null');
+                .whereRaw('p.dataPedido between \'' + inicial + '\' and \'' + final + '\' and p.deletedAt is null')
+                .orderBy('dataPedido');
             return pedidos;
         } catch (err) {
             console.log(err)
@@ -130,10 +131,11 @@ module.exports = {
     async intervaloDataDoPedidoPorCliente(inicial, final, clienteId) {
         try {
             pedidos = await connection('pedidos')
-                .select('dataPedido', 'c.name', 'dataVencimentoPedido', 'quant_frango', 'valor', 'quilo', 'desconto', 'situacao')
+                .select('dataPedido', 'c.name', 'dataVencimentoPedido', 'quant_frango', 'valor', 'quilo', 'desconto','totalDaNota', 'situacao')
                 .joinRaw('p inner join clientes c on c.id = clienteId')
                 .join('tabela_de_precos', 'tabela_de_precos.id', 'p.tabelaId')
-                .whereRaw('p.dataPedido between \'' + inicial + '\' and \'' + final + '\' and c.id = ' + clienteId + ' and p.deletedAt is null');
+                .whereRaw('p.dataPedido between \'' + inicial + '\' and \'' + final + '\' and c.id = ' + clienteId + ' and p.deletedAt is null')
+                .orderBy('dataPedido');
             return pedidos;
         } catch (err) {
             console.log(err)
@@ -144,9 +146,13 @@ module.exports = {
     async custoComFrete(inicial, final) {
         try {
             pedidos = await connection('pedidos')
-                .select('dataPedido', 'quilo', 'frete')
+                .select('dataPedido')
+                .sum({ quilo: 'quilo', frete: 'frete' })
                 .joinRaw('p inner join clientes c on c.id = clienteId')
-                .whereRaw('p.dataPedido between \'' + inicial + '\' and \'' + final + '\' and p.deletedAt is null');
+                .whereRaw('p.dataPedido between \'' + inicial + '\' and \'' + final + '\' and p.deletedAt is null')
+                .groupBy('dataPedido')
+                .orderBy('dataPedido');
+                console.log(pedidos)
             return pedidos;
         } catch (err) {
             console.log(err)
@@ -159,7 +165,8 @@ module.exports = {
             pedidos = await connection('pedidos')
                 .select('dataPedido', 'c.name', 'quant_frango', 'quant_caixa')
                 .joinRaw('p inner join clientes c on c.id = clienteId')
-                .whereRaw('p.dataPedido between \'' + inicial + '\' and \'' + final + '\' and p.deletedAt is null');
+                .whereRaw('p.dataPedido between \'' + inicial + '\' and \'' + final + '\' and p.deletedAt is null')
+                .orderBy('dataPedido');
             return pedidos;
         } catch (err) {
             console.log(err)
