@@ -6,9 +6,12 @@ module.exports = {
         try {
             var pedido;
             if (filters !== undefined && filters.id == undefined && Object.values(filters).length !== 0) {
+                var filtroWhere={}
+                filtroWhere.deletedAt=null;
+                filters.dataPedido ? filtroWhere.dataPedido = filters.dataPedido: "" ;
                 pedido = await connection('pedidos')
                     .select("*")
-                    .where({ "deletedAt": null, })
+                    .where(filtroWhere)
                     .limit(filters._end - filters._start)
                     .offset(filters._start)
                     .orderBy(filters._sort, filters._order)
