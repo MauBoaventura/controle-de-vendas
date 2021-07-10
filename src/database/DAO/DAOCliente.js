@@ -11,7 +11,7 @@ module.exports = {
                     .where({ "deletedAt": null, })
                     // .limit(filters._end - filters._start)
                     // .offset(filters._start)
-                    .orderBy(filters._sort, filters._order)
+                    .orderBy('name', 'ASC')
                 return client;
             }
             client = await connection('clientes')
