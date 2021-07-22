@@ -47,6 +47,7 @@ routes.get('/relatorioPorIntervaloDataDoPedido', RelatorioController.intervaloDa
 routes.get('/relatorioPorIntervaloDataDoPedidoPorCliente', RelatorioController.intervaloDataDoPedidoPorCliente)
 routes.get('/relatorioCustoComFrete', RelatorioController.custoComFrete)
 routes.get('/relatorioPedidosParaCarregamento', RelatorioController.pedidosParaCarregamento)
+routes.get('/relatorioGeral', RelatorioController.relatorioGeral)
 
 //Login
 routes.post('/login', LoginController.login)

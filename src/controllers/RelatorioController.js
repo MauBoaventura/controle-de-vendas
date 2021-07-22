@@ -155,4 +155,22 @@ module.exports = {
         }
     },
 
+    async relatorioGeral(req, res) {
+        try {
+            req.query.inicial = moment(req.query.inicial).format("YYYY-MM-DD HH:mm:ss");
+            req.query.final = moment(req.query.final).format("YYYY-MM-DD HH:mm:ss");
+            var pedido = await DAOPedido.relatorioGeral(req.query.inicial, req.query.final)
+
+            //Formata a data de saida do banco de dados para o formato YYYY-MM-DD
+            pedido.forEach(element => {
+                // element.createdAt = utc(element.createdAt).format("YYYY-MM-DD")
+                element.dataPedido = utc(element.dataPedido).format("YYYY-MM-DD")
+                element.dataVencimentoPedido = utc(element.dataVencimentoPedido).format("YYYY-MM-DD")
+            });
+            res.json(pedido)
+        } catch (error) {
+            res.status(404).json(error)
+        }
+    },
+
 };

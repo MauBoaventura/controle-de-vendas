@@ -176,6 +176,23 @@ module.exports = {
         }
     },
 
+    async relatorioGeral(inicial, final) {
+        try {
+            pedidos = await connection('pedidos')
+                .select('dataPedido', 'c.name', 'valor', 'valorCompra', 'dataVencimentoPedido', 'quant_frango', 'quant_caixa', 'quilo', 'desconto', 'totalDaNota', 'valorLucro')
+                .joinRaw('p inner join clientes c on c.id = clienteId')
+                .join('tabela_de_precos', 'tabela_de_precos.id', 'p.tabelaId')
+                .join('tabela_de_precos_compra', 'tabela_de_precos_compra.id', 'p.tabelaCompraId')
+                .whereRaw('p.dataPedido between \'' + inicial + '\' and \'' + final + '\' and p.deletedAt is null')
+                .orderBy('dataPedido');
+            return pedidos;
+        } catch (err) {
+            console.log(err)
+            throw { error: err }
+        }
+    },
+
+
     //A fazer
     async faturamentoEntreDatas(dataInicio, dataFim) {
         try {
