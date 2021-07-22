@@ -1,5 +1,7 @@
 # Controle-de-vendas
 
+**POSTMAN: https://documenter.getpostman.com/view/10582029/TzCQa5z6**
+
 ## Executar as Migrates:
 - npx knex migrate:latest
 - npx knex migrate:rollback
@@ -9,9 +11,6 @@ Olá! Esta é uma API REST que realiza um controle de pedidos online
 Contém endpoints para cadastro de usuarios além de outras funcionalidades da aplicação como cadastro de clientes, pedidos e tabelas de preços.
 
 É uma API feita com Javascript (Node.js), trabalha com banco de dados relacional (MySQL) e como ferramenta de autorização usa JSON WEB Tokem (JWT) 
-
-
-**POSTMAN: https://documenter.getpostman.com/view/10582029/TzCQa5z6**
 
 ## Endpoints:
 
