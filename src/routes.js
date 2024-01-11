@@ -1,6 +1,7 @@
 const express = require('express')
 const routes = express.Router()
 
+const HomeController = require('./controllers/HomeController')
 const UserController = require('./controllers/UserController')
 const LoginController = require('./controllers/LoginController')
 const ClienteController = require('./controllers/ClienteController')
@@ -11,6 +12,7 @@ const RelatorioController = require('./controllers/RelatorioController')
 const authentication = require('./util/authentication')
 
 // Usuarios
+routes.get('/', HomeController.index)
 routes.get('/clientes', ClienteController.index)
 routes.get('/clientes/:id', ClienteController.get)
 routes.post('/clientes', ClienteController.cadastro)
