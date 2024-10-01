@@ -7,6 +7,8 @@ module.exports = {
             var tabela = await connection('tabela_de_precos')
                 .select("*")
                 .where({ "deletedAt": null })
+                .orderBy("valor")
+
         } catch (err) {
             throw { error: err }
         }
