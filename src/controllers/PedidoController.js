@@ -2,6 +2,58 @@ const DAOPedido = require('../database/DAO/DAOPedido')
 const moment = require('moment');
 const { utc } = require('moment');
 
+const CAMPOS_NUMERICOS_PEDIDO = [
+    'clienteId',
+    'quant_frango',
+    'quant_caixa',
+    'quilo',
+    'tabelaId',
+    'quilo_desconto',
+    'desconto',
+    'frete',
+    'pagoFornecedor',
+    'totalArrecadado',
+    'totalDaNota',
+    'tabelaCompraId',
+    'valorLucro'
+]
+
+function normalizaNumero(valor) {
+    if (valor === undefined || valor === null || typeof valor === 'number')
+        return valor
+
+    if (typeof valor !== 'string')
+        return valor
+
+    const valorLimpo = valor.trim()
+
+    if (valorLimpo === '')
+        return 0
+
+    let valorNormalizado = valorLimpo.replace(/[^0-9,.-]/g, '')
+
+    if (valorNormalizado.includes(',') && valorNormalizado.includes('.'))
+        valorNormalizado = valorNormalizado.replace(/\./g, '').replace(',', '.')
+    else
+        valorNormalizado = valorNormalizado.replace(',', '.')
+
+    const numero = Number(valorNormalizado)
+
+    if (!Number.isFinite(numero))
+        throw new Error('Campo numerico invalido: ' + valor)
+
+    return numero
+}
+
+function normalizaCamposPedido(dados) {
+    CAMPOS_NUMERICOS_PEDIDO.forEach((campo) => {
+        if (Object.prototype.hasOwnProperty.call(dados, campo))
+            dados[campo] = normalizaNumero(dados[campo])
+    })
+
+    return dados
+}
+
 module.exports = {
     async index(req, res) {
         try {
@@ -49,6 +101,7 @@ module.exports = {
     async cadastro(req, res) {
         try {
             req.body.createdAt = moment(req.body.createdAt).format("YYYY-MM-DD HH:mm:ss");
+            normalizaCamposPedido(req.body)
             delete(req.body.id)
             var resp = await DAOPedido.insert(req.body)
         } catch (err) {
@@ -69,6 +122,7 @@ module.exports = {
         const id = req.params.id;
         try {
             req.body.createdAt = moment(req.body.createdAt).format("YYYY-MM-DD HH:mm:ss");
+            normalizaCamposPedido(req.body)
             if (req.body.dataVencimentoPedido)
                 req.body.dataVencimentoPedido = moment(req.body.dataVencimentoPedido).format("YYYY-MM-DD HH:mm:ss");
             if (req.body.dataPedido)
