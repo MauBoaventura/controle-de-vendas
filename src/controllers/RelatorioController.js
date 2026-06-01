@@ -8,9 +8,9 @@ module.exports = {
         try {
             var pedido = [];
 
-            const total = await DAOPedido.getAll()
+            const total = await DAOPedido.getCount(req.query)
             res.header('Access-Control-Expose-Headers', 'X-Total-Count')
-            res.header('X-Total-Count', total.length)
+            res.header('X-Total-Count', total)
 
             if (req.query.id != undefined && !Array.isArray(req.query.id)) {
                 pedido.push(await DAOPedido.getOneById(req.query.id))
@@ -85,8 +85,8 @@ module.exports = {
 
     async intervaloDataDoPedido(req, res) {
         try {
-            req.query.inicial = moment(req.query.inicial).format("YYYY-MM-DD HH:mm:ss");
-            req.query.final = moment(req.query.final).format("YYYY-MM-DD HH:mm:ss");
+            req.query.inicial = moment(req.query.inicial).format("YYYY-MM-DD 00:00:00");
+            req.query.final = moment(req.query.final).format("YYYY-MM-DD 23:59:59");
             var pedido = await DAOPedido.intervaloDataDoPedido(req.query.inicial, req.query.final)
 
             //Formata a data de saida do banco de dados para o formato YYYY-MM-DD
@@ -103,8 +103,8 @@ module.exports = {
 
     async intervaloDataDoPedidoPorCliente(req, res) {
         try {
-            req.query.inicial = moment(req.query.inicial).format("YYYY-MM-DD HH:mm:ss");
-            req.query.final = moment(req.query.final).format("YYYY-MM-DD HH:mm:ss");
+            req.query.inicial = moment(req.query.inicial).format("YYYY-MM-DD 00:00:00");
+            req.query.final = moment(req.query.final).format("YYYY-MM-DD 23:59:59");
             var pedido = await DAOPedido.intervaloDataDoPedidoPorCliente(req.query.inicial, req.query.final, req.query.clienteId)
 
             //Formata a data de saida do banco de dados para o formato YYYY-MM-DD
@@ -121,8 +121,8 @@ module.exports = {
 
     async custoComFrete(req, res) {
         try {
-            req.query.inicial = moment(req.query.inicial).format("YYYY-MM-DD HH:mm:ss");
-            req.query.final = moment(req.query.final).format("YYYY-MM-DD HH:mm:ss");
+            req.query.inicial = moment(req.query.inicial).format("YYYY-MM-DD 00:00:00");
+            req.query.final = moment(req.query.final).format("YYYY-MM-DD 23:59:59");
             var pedido = await DAOPedido.custoComFrete(req.query.inicial, req.query.final)
 
             //Formata a data de saida do banco de dados para o formato YYYY-MM-DD
@@ -139,8 +139,8 @@ module.exports = {
 
     async pedidosParaCarregamento(req, res) {
         try {
-            req.query.inicial = moment(req.query.inicial).format("YYYY-MM-DD HH:mm:ss");
-            req.query.final = moment(req.query.final).format("YYYY-MM-DD HH:mm:ss");
+            req.query.inicial = moment(req.query.inicial).format("YYYY-MM-DD 00:00:00");
+            req.query.final = moment(req.query.final).format("YYYY-MM-DD 23:59:59");
             var pedido = await DAOPedido.pedidosParaCarregamento(req.query.inicial, req.query.final)
 
             //Formata a data de saida do banco de dados para o formato YYYY-MM-DD
@@ -157,8 +157,8 @@ module.exports = {
 
     async relatorioGeral(req, res) {
         try {
-            req.query.inicial = moment(req.query.inicial).format("YYYY-MM-DD HH:mm:ss");
-            req.query.final = moment(req.query.final).format("YYYY-MM-DD HH:mm:ss");
+            req.query.inicial = moment(req.query.inicial).format("YYYY-MM-DD 00:00:00");
+            req.query.final = moment(req.query.final).format("YYYY-MM-DD 23:59:59");
             var pedido = await DAOPedido.relatorioGeral(req.query.inicial, req.query.final)
 
             //Formata a data de saida do banco de dados para o formato YYYY-MM-DD

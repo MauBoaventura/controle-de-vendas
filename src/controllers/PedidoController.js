@@ -59,9 +59,9 @@ module.exports = {
         try {
             var pedido = [];
             
-            const total = await DAOPedido.getAll()
+            const total = await DAOPedido.getCount(req.query)
             res.header('Access-Control-Expose-Headers', 'X-Total-Count')
-            res.header('X-Total-Count', total.length)
+            res.header('X-Total-Count', total)
 
             if (req.query.id != undefined && !Array.isArray(req.query.id)) {
                 pedido.push(await DAOPedido.getOneById(req.query.id))

@@ -2,16 +2,37 @@ const connection = require('../connection')
 const moment = require('moment')
 
 module.exports = {
+    async getCount(filters) {
+        try {
+            const query = connection('pedidos')
+                .count('id as total')
+                .where({ deletedAt: null })
+                .modify(function(queryBuilder) {
+                    if (filters && filters.dataPedido) {
+                        queryBuilder.whereRaw("DATE(dataPedido) = ?", [filters.dataPedido]);
+                    }
+                });
+            const result = await query.first();
+            return result.total;
+        } catch (err) {
+            throw { error: err }
+        }
+    },
+
     async getAll(filters) {
         try {
             var pedido;
             if (filters !== undefined && filters.id == undefined && Object.values(filters).length !== 0) {
                 var filtroWhere={}
                 filtroWhere.deletedAt=null;
-                filters.dataPedido ? filtroWhere.dataPedido = filters.dataPedido: "" ;
                 pedido = await connection('pedidos')
                     .select("*")
                     .where(filtroWhere)
+                    .modify(function(queryBuilder) {
+                        if (filters.dataPedido) {
+                            queryBuilder.whereRaw("DATE(dataPedido) = ?", [filters.dataPedido]);
+                        }
+                    })
                     .limit(filters._end - filters._start)
                     .offset(filters._start)
                     .orderBy(filters._sort, filters._order)
